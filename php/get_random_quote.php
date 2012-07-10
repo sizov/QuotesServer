@@ -18,24 +18,8 @@
 	/* select data base */
 	mysql_select_db('quotes',$link) or die('Cannot select the DB');
 
-	/* if user did not answered any questions, but we sent him them OR if he did not answer
-	to last asked question - ask same again.*/			
-	if(isset($_SESSION['last_asked_quote_text']) &&
-		isset($_SESSION['last_asked_origins_to_choose_from']) &&
-		isset($_SESSION['asked_quotes_IDs']) &&
-		(!isset($_SESSION['last_answered_quote_text']) ||
-		$_SESSION['last_answered_quote_text'] <> $_SESSION['last_asked_quote_text']	)){				
-		
-		sendQuestionSet($_SESSION['last_asked_quote_text'],
-						$_SESSION['last_asked_origins_to_choose_from'],
-						$_SESSION['asked_quotes_IDs'],
-						$AMOUNT_QUOTES_IN_SET);
-									
-		stopExecution();
-	}	
-	
-	/* if user was NOT already asked any questions */
-	else if (!isset($_SESSION['asked_quotes_IDs'])){		
+	/* if user was NOT already asked any questions or restart was launched*/
+	if (!isset($_SESSION['asked_quotes_IDs']) || isset($_GET['restart']) && $_GET["restart"] === "1"){		
 		$_SESSION['asked_quotes_IDs']= array();
 		$query = "	
 				SELECT *
@@ -47,6 +31,23 @@
 									);
 				";			
 	}	
+	
+	/* if user did not answered any questions, but we sent him them OR if he did not answer
+	to last asked question - ask same again.*/			
+	else if(isset($_SESSION['last_asked_quote_text']) &&
+		isset($_SESSION['last_asked_origins_to_choose_from']) &&
+		isset($_SESSION['asked_quotes_IDs']) &&
+		(!isset($_SESSION['last_answered_quote_text']) ||
+		$_SESSION['last_answered_quote_text'] <> $_SESSION['last_asked_quote_text']	)){				
+		
+		sendQuestionSet($_SESSION['last_asked_quote_text'],
+						$_SESSION['last_asked_origins_to_choose_from'],
+						$_SESSION['asked_quotes_IDs'],
+						$AMOUNT_QUOTES_IN_SET);
+									
+		stopExecution();
+	}		
+	
 	/* if user was already asked some questions */
 	else{
 		$asked_quotes_IDs = $_SESSION['asked_quotes_IDs'];

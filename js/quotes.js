@@ -1,6 +1,5 @@
 var GET_RANDOM_QUOTE_URL = "http://localhost/quotes/php/get_random_quote.php";
 var VERIFY_ANSWER_URL = "http://localhost/quotes/php/verify_answer.php";
-var GET_CURRENT_STATE_URL = "http://localhost/quotes/php/verify_answer.php";
 
 var TYPE_MOVIE_ID = 1;
 var TYPE_FAMOUS_PEOPLE_ID = 2;
@@ -51,6 +50,16 @@ function getRandomQuote() {
     });
 }
 
+function getRandomQuoteWithRestart() {
+    $.ajax({
+        url:GET_RANDOM_QUOTE_URL,
+        cache:false,
+        data:{origin_type_id:encodeURIComponent(quoteTypeToUse), restart:"1"},
+        dataType:"json",
+        success:randomQuoteSuccessHandler
+    });
+}
+
 function randomQuoteSuccessHandler(data) {
     if(data.hasOwnProperty('info')){
         handleInfo(data.info);
@@ -82,23 +91,9 @@ function displayOrigins(origins) {
 
     //create buttons for origins answers
     for (var i = 0; i < origins.length; i++) {
-        var originText = origins[i];
-
-        var originButton = document.createElement("a");
-        $(originButton).text(originText);
-        $(originButton).click(originClickHandlerHelper(originText));
-        $(originButton).addClass("originButton");
-        $(originButton).hover(
-            function() {
-                $(this).stop().animate({opacity: ACTIVE_OPACITY}, EFFECTS_LENGTH);
-            },
-            function() {
-                $(this).stop().animate({opacity: INACTIVE_OPACITY}, EFFECTS_LENGTH);
-            });
-
         var originListElement = document.createElement("li");
         $(originListElement).addClass("originListElement");
-        $(originListElement).append(originButton);
+        $(originListElement).append(createAnimationButton(origins[i], "originButton", originClickHandlerHelper(origins[i])));
 
         $(originsList).append(originListElement);
     }
@@ -181,5 +176,28 @@ function handleInfo(infoId){
 }
 
 function finishSet(){
+    //remove all elements and create buttons "reset" and "post on fb"
+    $("#quoteHolder").empty();
+    $("#originsHolder").empty();
+    $("#statsHolder").empty();
+    $("#nextQuestionButtonHolder").empty();
 
+    $("#originsHolder").append(createAnimationButton("restart", "bitResultButton", getRandomQuoteWithRestart));
+    $("#originsHolder").append(createAnimationButton("FB", "bitResultButton", function(){alert("FB!!!")}));
+}
+
+function createAnimationButton(text, styleClass, clickHandler){
+    var restartButton = document.createElement("a");
+    $(restartButton).text(text);
+    $(restartButton).click(clickHandler);
+    $(restartButton).addClass(styleClass);
+    $(restartButton).hover(
+        function() {
+            $(this).stop().animate({opacity: ACTIVE_OPACITY}, EFFECTS_LENGTH);
+        },
+        function() {
+            $(this).stop().animate({opacity: INACTIVE_OPACITY}, EFFECTS_LENGTH);
+        });
+
+    return restartButton;
 }
