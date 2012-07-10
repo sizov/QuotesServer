@@ -1,0 +1,72 @@
+body{
+    background: #e5e5e5 url(../assets/broken_noise.png) repeat top left;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/*@font-face {*/
+    /*font-family: a_Assuan;*/
+    /*src: url('../assets/Assuan_2.ttf');*/
+/*}*/
+
+hr{
+    width: 50%;
+    border: 0;
+    height: 1px;
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(150,150,150,0)), color-stop(50%,rgba(150,150,150,.75)), color-stop(100%,rgba(150,150,150,0)));
+    background: -webkit-linear-gradient(left, rgba(150,150,150,0) 0%, rgba(150,150,150,.75) 50%, rgba(150,150,150,0) 100%);
+    background:    -moz-linear-gradient(left, rgba(150,150,150,0) 0%, rgba(150,150,150,.75) 50%, rgba(150,150,150,0) 100%);
+    background:     -ms-linear-gradient(left, rgba(150,150,150,0) 0%, rgba(150,150,150,.75) 50%, rgba(150,150,150,0) 100%);
+    background:      -o-linear-gradient(left, rgba(150,150,150,0) 0%, rgba(150,150,150,.75) 50%, rgba(150,150,150,0) 100%);
+    background:         linear-gradient(left, rgba(150,150,150,0) 0%, rgba(150,150,150,.75) 50%, rgba(150,150,150,0) 100%);
+}
+
+.centered {
+    margin: 0 auto;
+    text-align: center;
+    width: 800px;
+}
+
+.quoteHolder{
+    font-size: 38px;
+    color: #FFFFFF;
+    padding: 5px 15px;
+    font-family: monospace;
+}
+
+.originsList{
+    list-style: none;
+    padding: 0px
+}
+
+.originListElement{
+    margin-bottom: 10px
+}
+
+.originButton {
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+    opacity: 0.6;
+    padding: 5px 15px;
+    font-family: fantasy;
+    text-decoration: none;
+}
+
+.statsHolder {
+    font-size: 18px;
+    color: #777777;
+    padding: 5px 15px;
+    font-family: monospace;
+    text-decoration: none;
+}
+
+.nextQuestionButtonHolder{
+    font-size: 38px;
+    color: #FFFFFF;
+    padding: 5px 15px;
+    font-family: monospace;
+    text-decoration: none;
+    cursor: pointer;
+}
