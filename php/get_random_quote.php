@@ -53,7 +53,10 @@
 		$asked_quotes_IDs = $_SESSION['asked_quotes_IDs'];
 		
 		/* if set of quotes questions has ended - exit with info message */
-		if(count($asked_quotes_IDs) == $AMOUNT_QUOTES_IN_SET){			
+		if(count($asked_quotes_IDs) == $AMOUNT_QUOTES_IN_SET){		
+			//require('fbmain.php');
+			
+		
 			echo json_encode(array('info'=>$INFO_CODE_SET_ENDED));
 			stopExecution();
 		}
